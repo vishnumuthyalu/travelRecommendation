@@ -1,84 +1,5 @@
-// Global variable to store travel data - embedded directly
-let travelData = {
-    "countries": [
-        {
-            "id": 1,
-            "name": "Australia",
-            "cities": [
-                {
-                    "name": "Sydney, Australia",
-                    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Sydney_Opera_House_and_Harbour_Bridge_Dusk_%282%29_2019-06-21.jpg/330px-Sydney_Opera_House_and_Harbour_Bridge_Dusk_%282%29_2019-06-21.jpg",
-                    "description": "A vibrant city known for its iconic landmarks like the Sydney Opera House and Sydney Harbour Bridge."
-                },
-                {
-                    "name": "Melbourne, Australia",
-                    "imageUrl": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FMelbourne&psig=AOvVaw3ygl_ImjkvHQj1GHl60l3N&ust=1762279616031000&source=images&cd=vfe&opi=89978449&ved=0CBYQjRxqFwoTCKj1pKXJ1pADFQAAAAAdAAAAABAE",
-                    "description": "A cultural hub famous for its art, food, and diverse neighborhoods."
-                }
-            ]
-        },
-        {
-            "id": 2,
-            "name": "Japan",
-            "cities": [
-                {
-                    "name": "Tokyo, Japan",
-                    "imageUrl": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.history.com%2Farticles%2Fsix-things-you-should-know-about-tokyo&psig=AOvVaw2u93asXvQ9dg_T7sHmYuAp&ust=1762279670693000&source=images&cd=vfe&opi=89978449&ved=0CBYQjRxqFwoTCICX27_J1pADFQAAAAAdAAAAABAE",
-                    "description": "A bustling metropolis blending tradition and modernity, famous for its cherry blossoms and rich culture."
-                },
-                {
-                    "name": "Kyoto, Japan",
-                    "imageUrl": "https://i0.wp.com/www.touristjapan.com/wp-content/uploads/2025/01/map-of-kyoto-japan-travel-scaled.jpg?fit=2560%2C1707&ssl=1",
-                    "description": "Known for its historic temples, gardens, and traditional tea houses."
-                }
-            ]
-        },
-        {
-            "id": 3,
-            "name": "Brazil",
-            "cities": [
-                {
-                    "name": "Rio de Janeiro, Brazil",
-                    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Cidade_Maravilhosa.jpg/330px-Cidade_Maravilhosa.jpg",
-                    "description": "A lively city known for its stunning beaches, vibrant carnival celebrations, and iconic landmarks."
-                },
-                {
-                    "name": "São Paulo, Brazil",
-                    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Marginal_Pinheiros_e_Jockey_Club.jpg/330px-Marginal_Pinheiros_e_Jockey_Club.jpg",
-                    "description": "The financial hub with diverse culture, arts, and a vibrant nightlife."
-                }
-            ]
-        }
-    ],
-    "temples": [
-        {
-            "id": 1,
-            "name": "Angkor Wat, Cambodia",
-            "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9ei1b1PC0KxdBKQ3ILFspUtizCQVc9NvWZw&s",
-            "description": "A UNESCO World Heritage site and the largest religious monument in the world."
-        },
-        {
-            "id": 2,
-            "name": "Taj Mahal, India",
-            "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Taj_Mahal_%28Edited%29.jpeg/1200px-Taj_Mahal_%28Edited%29.jpeg",
-            "description": "An iconic symbol of love and a masterpiece of Mughal architecture."
-        }
-    ],
-    "beaches": [
-        {
-            "id": 1,
-            "name": "Bora Bora, French Polynesia",
-            "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Bora_Bora_ISS006.jpg/1200px-Bora_Bora_ISS006.jpg",
-            "description": "An island known for its stunning turquoise waters and luxurious overwater bungalows."
-        },
-        {
-            "id": 2,
-            "name": "Copacabana Beach, Brazil",
-            "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/62/Praia_de_Copacabana_-_Rio_de_Janeiro%2C_Brasil.jpg",
-            "description": "A famous beach in Rio de Janeiro, Brazil, with a vibrant atmosphere and scenic views."
-        }
-    ]
-};
+// Global variable to store travel data
+let travelData = null;
 
 // Time zone mapping for countries
 const countryTimeZones = {
@@ -90,11 +11,30 @@ const countryTimeZones = {
     'french polynesia': 'Pacific/Tahiti'
 };
 
-// Load travel data when page loads
+// Fetch travel data when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Travel data loaded successfully:', travelData);
+    fetchTravelData();
     showPage('home'); // Show home page by default
 });
+
+// Fetch data from JSON file
+function fetchTravelData() {
+    fetch('travel_recommendation_api.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            travelData = data;
+            console.log('Travel data loaded successfully:', data);
+        })
+        .catch(error => {
+            console.error('Error fetching travel data:', error);
+            alert('Failed to load travel recommendations. Please make sure you are using Live Server or a local web server.');
+        });
+}
 
 // Function to show/hide pages
 function showPage(pageName) {
@@ -132,7 +72,12 @@ function searchRecommendations() {
         return;
     }
 
-    if (!travelData) {
+    // Debug: Check if travelData exists
+    console.log('travelData exists:', !!travelData);
+    console.log('travelData value:', travelData);
+    
+    if (!travelData || typeof travelData !== 'object') {
+        console.error('Travel data is not loaded properly');
         alert('Travel data is still loading. Please try again in a moment.');
         return;
     }

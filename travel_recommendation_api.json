@@ -11,7 +11,7 @@
           },
           {
             "name": "Melbourne, Australia",
-            "imageUrl": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FMelbourne&psig=AOvVaw3ygl_ImjkvHQj1GHl60l3N&ust=1762279616031000&source=images&cd=vfe&opi=89978449&ved=0CBYQjRxqFwoTCKj1pKXJ1pADFQAAAAAdAAAAABAE",
+            "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Melburnian_Skyline_b.jpg/330px-Melburnian_Skyline_b.jpg",
             "description": "A cultural hub famous for its art, food, and diverse neighborhoods."
           }
         ]
@@ -22,7 +22,7 @@
         "cities": [
           {
             "name": "Tokyo, Japan",
-            "imageUrl": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.history.com%2Farticles%2Fsix-things-you-should-know-about-tokyo&psig=AOvVaw2u93asXvQ9dg_T7sHmYuAp&ust=1762279670693000&source=images&cd=vfe&opi=89978449&ved=0CBYQjRxqFwoTCICX27_J1pADFQAAAAAdAAAAABAE",
+            "imageUrl": "https://res.cloudinary.com/aenetworks/image/upload/c_fill,ar_2,w_3840,h_1920,g_auto/dpr_auto/f_auto/q_auto:eco/v1/gettyimages-1390815938?_a=BAVAZGID0",
             "description": "A bustling metropolis blending tradition and modernity, famous for its cherry blossoms and rich culture."
           },
           {
@@ -53,7 +53,7 @@
       {
         "id": 1,
         "name": "Angkor Wat, Cambodia",
-        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9ei1b1PC0KxdBKQ3ILFspUtizCQVc9NvWZw&s",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d4/20171126_Angkor_Wat_4712_DxO.jpg",
         "description": "A UNESCO World Heritage site and the largest religious monument in the world."
       },
       {
