@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelBloom - Your Ultimate Travel Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .search-container input {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+            width: 200px;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-search {
+            background-color: #ffd700;
+            color: #333;
+        }
+
+        .btn-search:hover {
+            background-color: #ffed4e;
+            transform: scale(1.05);
+        }
+
+        .btn-reset {
+            background-color: #ff6b6b;
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background-color: #ff5252;
+            transform: scale(1.05);
+        }
+
+        /* Home Page */
+        .home-section {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1200') center/cover no-repeat;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .home-content {
+            max-width: 800px;
+        }
+
+        .home-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .home-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+            text-decoration: none;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2);
+            color: #ffd700;
+        }
+
+        /* Results Section */
+        .results-section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            min-height: 400px;
+        }
+
+        .results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .result-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .result-card-content {
+            padding: 1.5rem;
+        }
+
+        .result-card h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .time-display {
+            background-color: #f0f0f0;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        /* About Us Page */
+        .about-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .about-section h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        .about-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+
+        .about-content p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .team-section h2 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .team-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-member {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+
+        .team-member-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        .team-member h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-member p {
+            color: #666;
+        }
+
+        /* Contact Us Page */
+        .contact-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .contact-section h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 3rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.05);
+        }
+
+        /* Hidden class for page sections */
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .home-content h1 {
+                font-size: 2rem;
+            }
+
+            .home-content p {
+                font-size: 1rem;
+            }
+
+            .search-container {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .search-container input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="navbar-container">
+            <a href="#" class="logo" onclick="showPage('home')">🌍 TravelBloom</a>
+            <div class="nav-links">
+                <a href="#" onclick="showPage('home')">Home</a>
+                <a href="#" onclick="showPage('about')">About Us</a>
+                <a href="#" onclick="showPage('contact')">Contact Us</a>
+                <div class="search-container" id="searchContainer">
+                    <input type="text" id="searchInput" placeholder="Search destinations...">
+                    <button class="btn btn-search" onclick="searchRecommendations()">Search</button>
+                    <button class="btn btn-reset" onclick="clearResults()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="homePage" class="page">
+        <div class="home-section">
+            <div class="home-content">
+                <h1>Discover Your Next Adventure</h1>
+                <p>Explore breathtaking destinations, immerse yourself in rich cultures, and create unforgettable memories. From pristine beaches to ancient temples and vibrant cities, we help you find the perfect travel experience.</p>
+                <div class="social-icons">
+                    <a href="#" title="Facebook">📘</a>
+                    <a href="#" title="Instagram">📷</a>
+                    <a href="#" title="Twitter">🐦</a>
+                    <a href="#" title="YouTube">📺</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section">
+            <div id="resultsContainer" class="results-container"></div>
+        </div>
+    </div>
+
+    <!-- About Us Page -->
+    <div id="aboutPage" class="page hidden">
+        <div class="about-section">
+            <h1>About Us</h1>
+            <div class="about-content">
+                <p>Welcome to <strong>TravelBloom</strong>, your trusted companion for discovering the world's most amazing destinations. Founded in 2020, we are passionate about connecting travelers with unforgettable experiences across the globe.</p>
+                <p>Our mission is to inspire and empower people to explore new cultures, embrace adventure, and create lasting memories. Whether you're seeking serene beaches, spiritual temples, or bustling cities, we provide carefully curated recommendations to make your journey extraordinary.</p>
+                <p>With years of expertise in the travel industry, our team of dedicated professionals works tirelessly to bring you the most authentic and enriching travel experiences. We believe that travel is not just about visiting places—it's about transforming perspectives and connecting with the world in meaningful ways.</p>
+            </div>
+
+            <div class="team-section">
+                <h2>Our Team</h2>
+                <div class="team-container">
+                    <div class="team-member">
+                        <div class="team-member-icon">👨‍💼</div>
+                        <h3>Sarah Johnson</h3>
+                        <p>CEO & Founder</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-member-icon">👩‍💻</div>
+                        <h3>Michael Chen</h3>
+                        <p>Head of Operations</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-member-icon">👨‍✈️</div>
+                        <h3>Emma Rodriguez</h3>
+                        <p>Travel Consultant</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-member-icon">👩‍🎨</div>
+                        <h3>David Kumar</h3>
+                        <p>Marketing Director</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Us Page -->
+    <div id="contactPage" class="page hidden">
+        <div class="contact-section">
+            <h1>Contact Us</h1>
+            <div class="contact-form">
+                <form onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inline travel data from JSON file - make it globally accessible
+        window.inlineTravelData = {
+            "countries": [
+              {
+                "id": 1,
+                "name": "Australia",
+                "cities": [
+                  {
+                    "name": "Sydney, Australia",
+                    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Sydney_Opera_House_and_Harbour_Bridge_Dusk_%282%29_2019-06-21.jpg/330px-Sydney_Opera_House_and_Harbour_Bridge_Dusk_%282%29_2019-06-21.jpg",
+                    "description": "A vibrant city known for its iconic landmarks like the Sydney Opera House and Sydney Harbour Bridge."
+                  },
+                  {
+                    "name": "Melbourne, Australia",
+                    "imageUrl": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FMelbourne&psig=AOvVaw3ygl_ImjkvHQj1GHl60l3N&ust=1762279616031000&source=images&cd=vfe&opi=89978449&ved=0CBYQjRxqFwoTCKj1pKXJ1pADFQAAAAAdAAAAABAE",
+                    "description": "A cultural hub famous for its art, food, and diverse neighborhoods."
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "name": "Japan",
+                "cities": [
+                  {
+                    "name": "Tokyo, Japan",
+                    "imageUrl": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.history.com%2Farticles%2Fsix-things-you-should-know-about-tokyo&psig=AOvVaw2u93asXvQ9dg_T7sHmYuAp&ust=1762279670693000&source=images&cd=vfe&opi=89978449&ved=0CBYQjRxqFwoTCICX27_J1pADFQAAAAAdAAAAABAE",
+                    "description": "A bustling metropolis blending tradition and modernity, famous for its cherry blossoms and rich culture."
+                  },
+                  {
+                    "name": "Kyoto, Japan",
+                    "imageUrl": "https://i0.wp.com/www.touristjapan.com/wp-content/uploads/2025/01/map-of-kyoto-japan-travel-scaled.jpg?fit=2560%2C1707&ssl=1",
+                    "description": "Known for its historic temples, gardens, and traditional tea houses."
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "name": "Brazil",
+                "cities": [
+                  {
+                    "name": "Rio de Janeiro, Brazil",
+                    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Cidade_Maravilhosa.jpg/330px-Cidade_Maravilhosa.jpg",
+                    "description": "A lively city known for its stunning beaches, vibrant carnival celebrations, and iconic landmarks."
+                  },
+                  {
+                    "name": "São Paulo, Brazil",
+                    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Marginal_Pinheiros_e_Jockey_Club.jpg/330px-Marginal_Pinheiros_e_Jockey_Club.jpg",
+                    "description": "The financial hub with diverse culture, arts, and a vibrant nightlife."
+                  }
+                ]
+              }
+            ],
+            "temples": [
+              {
+                "id": 1,
+                "name": "Angkor Wat, Cambodia",
+                "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9ei1b1PC0KxdBKQ3ILFspUtizCQVc9NvWZw&s",
+                "description": "A UNESCO World Heritage site and the largest religious monument in the world."
+              },
+              {
+                "id": 2,
+                "name": "Taj Mahal, India",
+                "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Taj_Mahal_%28Edited%29.jpeg/1200px-Taj_Mahal_%28Edited%29.jpeg",
+                "description": "An iconic symbol of love and a masterpiece of Mughal architecture."
+              }
+            ],
+            "beaches": [
+              {
+                "id": 1,
+                "name": "Bora Bora, French Polynesia",
+                "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Bora_Bora_ISS006.jpg/1200px-Bora_Bora_ISS006.jpg",
+                "description": "An island known for its stunning turquoise waters and luxurious overwater bungalows."
+              },
+              {
+                "id": 2,
+                "name": "Copacabana Beach, Brazil",
+                "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/62/Praia_de_Copacabana_-_Rio_de_Janeiro%2C_Brasil.jpg",
+                "description": "A famous beach in Rio de Janeiro, Brazil, with a vibrant atmosphere and scenic views."
+              }
+            ]
+          };
+    </script>
+    <script src="travel_recommendation.js"></script>
+</body>
+</html>
